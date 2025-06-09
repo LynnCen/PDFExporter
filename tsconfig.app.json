@@ -7,9 +7,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
+  "lib": ["ES2023"],
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

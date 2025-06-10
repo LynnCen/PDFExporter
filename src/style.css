@@ -17,10 +17,12 @@
 @layer components {
   .btn-primary {
     @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply flex items-center justify-center whitespace-nowrap min-w-max;
   }
   
   .btn-secondary {
     @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply flex items-center justify-center whitespace-nowrap min-w-max;
   }
   
   .card {
@@ -29,5 +31,43 @@
   
   .input-field {
     @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+  }
+
+  /* 预览区样式 */
+  .preview-container {
+    @apply bg-white rounded-xl shadow-sm border-2 border-dashed border-gray-200 transition-all duration-300;
+  }
+
+  .preview-container.format-a4 {
+    aspect-ratio: 210 / 297; /* A4 比例 */
+  }
+
+  .preview-container.format-letter {
+    aspect-ratio: 8.5 / 11; /* Letter 比例 */
+  }
+
+  .preview-container.format-legal {
+    aspect-ratio: 8.5 / 14; /* Legal 比例 */
+  }
+
+  .preview-container.orientation-landscape {
+    transform: rotate(0deg);
+  }
+
+  .preview-container.orientation-landscape.format-a4 {
+    aspect-ratio: 297 / 210;
+  }
+
+  .preview-container.orientation-landscape.format-letter {
+    aspect-ratio: 11 / 8.5;
+  }
+
+  .preview-container.orientation-landscape.format-legal {
+    aspect-ratio: 14 / 8.5;
+  }
+
+  .demo-content {
+    @apply w-full h-full flex flex-col overflow-hidden;
+    min-height: 400px;
   }
 }

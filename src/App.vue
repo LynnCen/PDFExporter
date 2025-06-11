@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import type { DemoItem } from './types/demo'
 import DemoViewer from './components/DemoViewer.vue'
+import FeatureSection from './components/FeatureSection.vue'
 
 const activeTab = ref<string>('home')
 const selectedDemo = ref<DemoItem | null>(null)
@@ -11,43 +12,10 @@ const tabs = [
   { id: 'demos', label: 'Demos' },
 ]
 
-const features = [
-  {
-    title: 'High Quality Export',
-    description: 'Vector-based PDF generation with crisp text and images',
-    icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
-  },
-  {
-    title: 'TypeScript Support',
-    description: 'Full TypeScript support with comprehensive type definitions',
-    icon: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'
-  },
-  {
-    title: 'Flexible Configuration',
-    description: 'Customize page size, orientation, margins, and more',
-    icon: 'M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4'
-  },
-  {
-    title: 'Vue 3 Composition API',
-    description: 'Built with modern Vue 3 and Composition API patterns',
-    icon: 'M13 10V3L4 14h7v7l9-11h-7z'
-  },
-  {
-    title: 'Progress Tracking',
-    description: 'Real-time progress updates during PDF generation',
-    icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
-  },
-  {
-    title: 'Multiple Formats',
-    description: 'Support for various page formats and custom dimensions',
-    icon: 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z'
-  }
-]
-
 const stats = [
-  { value: '10+', label: 'Demo Templates' },
+  { value: '6+', label: 'Demo Templates' },
   { value: '100%', label: 'TypeScript' },
-  { value: '5kb', label: 'Bundle Size' }
+  { value: '<10kb', label: 'Bundle Size' }
 ]
 
 const demoItems: DemoItem[] = [
@@ -109,16 +77,21 @@ const selectDemo = (demo: DemoItem) => {
 const scrollToFeatures = () => {
   document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
 }
+
+const backToHome = () => {
+  selectedDemo.value = null
+  activeTab.value = 'home'
+}
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b">
+    <header class="header-glass sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-4">
-          <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
+          <div class="flex items-center space-x-3 cursor-pointer" @click="backToHome">
+            <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg">
               <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
               </svg>
@@ -129,15 +102,15 @@ const scrollToFeatures = () => {
             </div>
           </div>
           
-          <nav class="hidden md:flex space-x-6">
+          <nav class="hidden md:flex space-x-2">
             <button 
               v-for="tab in tabs" 
               :key="tab.id"
               @click="activeTab = tab.id"
               :class="[
-                'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                'px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300',
                 activeTab === tab.id 
-                  ? 'bg-primary-100 text-primary-700' 
+                  ? 'bg-primary-100 text-primary-700 shadow-sm' 
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
               ]"
             >
@@ -150,101 +123,217 @@ const scrollToFeatures = () => {
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <!-- Home Tab -->
-      <div v-if="activeTab === 'home'" class="space-y-12">
-        <!-- Hero Section -->
-        <section class="text-center py-12">
-          <h2 class="text-4xl font-bold text-gray-900 mb-4">
-            Transform Your Vue Components into PDF
-          </h2>
-          <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            A powerful and flexible Vue 3 + TypeScript library for exporting Vue components to PDF with high-quality rendering and customizable options.
-          </p>
-          <div class="flex justify-center space-x-4">
-            <button @click="activeTab = 'demos'" class="btn-primary px-6 py-3 text-lg">
-              Try Demos
-            </button>
-            <button @click="scrollToFeatures" class="btn-secondary px-6 py-3 text-lg">
-              Learn More
-            </button>
-          </div>
-        </section>
+      <!-- Demo Viewer -->
+      <div v-if="activeTab === 'viewer' && selectedDemo" class="animate-fade-slide-in">
+        <DemoViewer :demo="selectedDemo" @back="backToHome" />
+      </div>
 
-        <!-- Features Section -->
-        <section id="features" class="py-12">
-          <h3 class="text-3xl font-bold text-center text-gray-900 mb-12">Key Features</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div v-for="feature in features" :key="feature.title" class="card text-center">
-              <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="feature.icon"></path>
-                </svg>
+      <!-- Home Tab -->
+      <div v-else-if="activeTab === 'home'" class="space-y-20">
+        <!-- Hero Section -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-16">
+          <div class="space-y-8">
+            <h2 class="hero-title">
+              Transform Your Vue Components into PDF
+            </h2>
+            <p class="text-xl text-gray-600 leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s; animation-fill-mode: both;">
+              A powerful and flexible Vue 3 + TypeScript library for exporting Vue components to PDF with high-quality rendering and customizable options.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style="animation-delay: 0.4s; animation-fill-mode: both;">
+                              <button @click="activeTab = 'demos'" class="btn-primary px-8 py-4 text-lg font-medium rounded-xl transition-all duration-300 flex items-center justify-center group">
+                  <span>Try Demos</span>
+                  <svg class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+                <button @click="scrollToFeatures" class="btn-secondary px-8 py-4 text-lg font-medium rounded-xl transition-all duration-300 flex items-center justify-center">
+                  Learn More
+                </button>
+            </div>
+          </div>
+          
+          <!-- Hero Visual -->
+          <div class="flex justify-center lg:justify-end animate-fade-in-up" style="animation-delay: 0.6s; animation-fill-mode: both;">
+            <div class="relative">
+              <div class="floating-card" v-for="(demo, index) in demoItems.slice(0, 3)" :key="demo.id" :style="{ animationDelay: `${index * 0.2}s` }">
+                <div class="card-icon">{{ demo.icon }}</div>
+                <div class="card-title">{{ demo.title }}</div>
               </div>
-              <h4 class="text-xl font-semibold text-gray-900 mb-2">{{ feature.title }}</h4>
-              <p class="text-gray-600">{{ feature.description }}</p>
             </div>
           </div>
         </section>
 
+        <!-- Features Section -->
+        <FeatureSection />
+
         <!-- Stats Section -->
-        <section class="bg-white rounded-2xl p-8 shadow-sm">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div v-for="stat in stats" :key="stat.label">
-              <div class="text-3xl font-bold text-primary-600 mb-2">{{ stat.value }}</div>
-              <div class="text-gray-600">{{ stat.label }}</div>
+        <section class="py-16">
+          <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100" style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              <div v-for="(stat, index) in stats" :key="stat.label" class="space-y-2 animate-fade-in-up" :style="{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }">
+                <div class="text-3xl lg:text-4xl font-bold text-primary-600">{{ stat.value }}</div>
+                <div class="text-gray-600 font-medium">{{ stat.label }}</div>
+              </div>
             </div>
           </div>
         </section>
       </div>
 
       <!-- Demos Tab -->
-      <div v-if="activeTab === 'demos'" class="space-y-8">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold text-gray-900 mb-4">PDF Export Demos</h2>
-          <p class="text-gray-600 max-w-2xl mx-auto">
-            Explore different types of content and see how they convert to PDF format.
+      <div v-else-if="activeTab === 'demos'" class="space-y-8 animate-fade-slide-in">
+        <div class="text-center space-y-4">
+          <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Demo Templates</h2>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Explore our collection of professionally designed templates ready for PDF export
           </p>
         </div>
-
+        
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div v-for="demo in demoItems" :key="demo.id" class="card hover:shadow-lg transition-shadow cursor-pointer" @click="selectDemo(demo)">
-            <div class="flex items-start space-x-4">
-              <div class="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span class="text-2xl">{{ demo.icon }}</span>
+          <div 
+            v-for="(demo, index) in demoItems" 
+            :key="demo.id" 
+            class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 transition-all duration-300 cursor-pointer hover:shadow-xl hover:-translate-y-2 hover:border-primary-200 animate-fade-in-up group"
+            :style="{ animationDelay: `${index * 0.1}s`, animationFillMode: 'both' }"
+            @click="selectDemo(demo)"
+          >
+            <div class="flex items-start space-x-4 mb-4">
+              <div class="text-3xl flex-shrink-0">{{ demo.icon }}</div>
+              <div class="flex-1 space-y-2">
+                <h3 class="font-semibold text-gray-900">{{ demo.title }}</h3>
+                <p class="text-sm text-gray-600 leading-relaxed">{{ demo.description }}</p>
               </div>
-              <div class="flex-1">
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ demo.title }}</h3>
-                <p class="text-gray-600 text-sm mb-3">{{ demo.description }}</p>
-                <div class="flex flex-wrap gap-1">
-                  <span v-for="tag in demo.tags" :key="tag" class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded">
-                    {{ tag }}
-                  </span>
-                </div>
-              </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span v-for="tag in demo.tags" :key="tag" class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-lg font-medium">
+                {{ tag }}
+              </span>
+            </div>
+            
+            <div class="flex items-center justify-between text-primary-600 font-medium border-t border-gray-100 pt-4">
+              <span class="transition-colors duration-200">Try Template</span>
+              <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Demo Viewer -->
-      <div v-if="activeTab === 'viewer' && selectedDemo">
-        <DemoViewer :demo="selectedDemo" @back="activeTab = 'demos'" />
       </div>
     </main>
   </div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* Header Styles */
+.header-glass {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+/* Hero Title with Gradient */
+.hero-title {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #1f2937;
+  background: linear-gradient(135deg, #1f2937 0%, #4f46e5 50%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fade-in-up 0.8s ease-out;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+}
+
+/* Floating Cards Animation */
+.floating-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid #f3f4f6;
+  margin-bottom: 1rem;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+.floating-card:nth-child(2) {
+  margin-left: 2rem;
+  animation-delay: 1s;
+}
+
+.floating-card:nth-child(3) {
+  margin-left: 1rem;
+  animation-delay: 2s;
+}
+
+.card-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-title {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Custom animations - keeping only essential ones */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Utility classes for animations */
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out;
+}
+
+.animate-fade-slide-in {
+  animation: fade-slide-in 0.6s ease-out;
+}
+
+@keyframes fade-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 1.875rem;
+    text-align: center;
+  }
+  
+  .floating-card {
+    transform: scale(0.75);
+  }
 }
 </style>

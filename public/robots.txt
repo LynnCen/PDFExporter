@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://your-domain.com/sitemap.xml
+
+# Crawl-delay for better server performance
+Crawl-delay: 1
+
+# Block access to build files and config
+Disallow: /dist/
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Allow main assets
+Allow: /*.css$
+Allow: /*.js$ 

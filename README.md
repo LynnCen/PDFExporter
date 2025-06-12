@@ -613,7 +613,7 @@ We welcome contributions! Here's how you can help:
 - 📖 **Documentation**: This README and inline code comments
 - 🐛 **Issues**: [GitHub Issues](https://github.com/LynnCen/PDFExporter/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/LynnCen/PDFExporter/discussions)
-- 📧 **Email**: lynncen@example.com
+- 📧 **Email**: zhonglingcen466@gmail.com
 
 ### FAQ
 
